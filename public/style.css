@@ -1,0 +1,97 @@
+*{
+    font-family: 'Oswald', sans-serif;
+}
+#menu:hover{
+    color:  #F2BB16;
+    text-decoration: underline;
+    
+}
+.color1{
+    background-color: #042940;
+    color: #042940;
+}
+
+.color2{
+    background-color: #005C53;
+    color: #005C53;
+}
+
+.color3{
+    background-color: #9FC131;
+    color: #9FC131;
+}
+
+.color4{
+    background-color: #DBF227;
+    color: #DBF227;
+}
+
+.color5{
+    background-color: #D6D58E;
+    color: #D6D58E;
+}
+
+.navbar-toggler:hover{
+    border-color: #06dfc9 !important ;
+    color: #06dfc9 !important ;
+}
+.color10{
+
+   background-color:  #F2E416;
+   color:  #F2E416;
+}
+.texto10{
+    color:  #F2E416;
+}
+.color6{
+
+    background-color:  #F2CE16;
+    color:  #F2CE16;
+ }
+ .color7{
+
+    background-color:  #ffa601;
+    color:  #403814;
+ }
+ .color8{
+
+    background-color:  #F2BB16;
+    
+ }
+ .texto8{
+    color:  #F2BB16;
+ }
+
+.color9{
+    background-color: #0D0D0D;
+}
+.texto9{
+    color: #0D0D0D;
+}
+
+.color11{
+    background-color: #010440;
+    color: #010440;
+}
+.color12{
+    background-color: #010326;
+    color: #010326;
+}
+.color13{
+    background-color: #D98977;
+    color: #D98977;
+}
+.color14{
+    background-color: #BF0404;
+    color: #BF0404;
+}
+.color15{
+    background-color: #F2F2F2;
+    color: #F2F2F2;
+}
+
+.border-nav{
+    border: 0.2rem solid black;
+}
+
+
