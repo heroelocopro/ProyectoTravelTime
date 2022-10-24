@@ -13,7 +13,12 @@ class evento extends Model
         'nombre',
         'descripcion',
         'imagen',
-        'fecha',
-        'mapa',
+        'fechaInicio',
+        'fechaFin',
+        'ciudades',
     ];
+
+    public function lugarturisticos(){
+        return $this->belongsToMany(lugarturistico::class,'lugaresturisticos_eventos','idEvento','id');
+    }
 }

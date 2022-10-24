@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\comentarioevento;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\URL;
 class ComentarioeventoController extends Controller
 {
     /**
@@ -35,7 +36,24 @@ class ComentarioeventoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'comentario' => 'required|max:420',
+            'idUsuarioComentario' => 'required',
+            'idEventoComentario' => 'required',
+            'puntuacion' => 'required'
+        ]);
+
+
+
+        comentarioevento::create([
+            'idEventoComentario' => $request->idEventoComentario,
+            'idUsuarioComentario' => $request->idUsuarioComentario,
+            'comentario' => $request->comentario,
+            'puntuacion' => $request->puntuacion
+        ]);
+        
+        return Redirect::to(URL::previous() . "#opiniones")->with('success','Comentario Creado');
+
     }
 
     /**

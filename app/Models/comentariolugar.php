@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class comentariolugar extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'idLugarComentario',
+        'comentario',
+        'idUsuarioLugar',
+        'puntuacion',
+    ];
 }

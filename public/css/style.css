@@ -1,0 +1,12 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.fondo{
+    /* background-image: url(/img/hong-kong-traffic-view.jpg); */
+    background-size: cover;
+    background-color: rgb(236, 146, 28);
+}

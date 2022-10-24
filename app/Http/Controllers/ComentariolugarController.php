@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\comentariolugar;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\URL;
 class ComentariolugarController extends Controller
 {
     /**
@@ -36,6 +37,23 @@ class ComentariolugarController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'comentario' => 'required|max:420',
+            'idUsuarioLugar' => 'required',
+            'idLugarComentario' => 'required',
+            'puntuacion' => 'required'
+        ]);
+
+
+
+        comentariolugar::create([
+            'idLugarComentario' => $request->idLugarComentario,
+            'idUsuarioLugar' => $request->idUsuarioLugar,
+            'comentario' => $request->comentario,
+            'puntuacion' => $request->puntuacion
+        ]);
+        
+        return Redirect::to(URL::previous() . "#opiniones")->with('success','Comentario Creado');
     }
 
     /**

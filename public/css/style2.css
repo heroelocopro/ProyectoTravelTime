@@ -1,0 +1,33 @@
+*{
+    box-sizing: border-box;
+
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto Mono', monospace;
+}
+
+body{
+    background-image: url(/ilustraciones/2.jpg);
+    background-image: url(/ilustraciones/1.jpg);
+    background-image: url(/ilustraciones/3.jpg);
+    background-image: url(/ilustraciones/4.jpg);
+    overflow-y: hidden;
+}
+
+h1{
+    font-family: 'Roboto Mono', monospace;
+}
+
+
+.alert-link:hover{
+    text-decoration-color: red;
+    color: red;
+}
+
+.titulo{
+    font-family: 'Roboto Mono', monospace;
+}
+
+
+
+

@@ -21,7 +21,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
     <title>TravelTime</title>
 </head>
-<body class="color8">
+<body class="color8 d-flex flex-column min-vh-100">
 
 <div id="contenedor" class="escondido animate__animated animate__backInDown  ">
     <div   class=" collapse  color7 animate__animated w-100 navbar-collapse" id="navbarSupportedContent">
@@ -55,10 +55,11 @@
 
 
 
+
 <div id="eventoscontenedor" class="animate__animated ">
 
-
     @foreach ($eventos as $evento )
+    
     <div class="container-lg  pb-5  bg-white mt-3 rounded">
         <span class="mb-3">
             <h2 class="text-center">Evento</h2>
@@ -78,7 +79,7 @@
     <h4 class="d-inline-block text-center">Descripcion e Imagen</h4>
   </div>
   <div class="col-lg-6 ">
-    <p class="d-inline-block text-center   "> {{$evento->descripcion}} </p>
+    <p class="d-inline-block text-center    "> {{$evento->descripcion}} </p>
   </div>
   <div class="col-lg-4 col-sm-12 text-center ">
     <img src="img/{{$evento->imagen}}" class="img-fluid border  color8 rounded mx-auto m-2" alt="" srcset="">
@@ -100,24 +101,74 @@
   </div>
 </div>
 
+<div class="mx-auto d-block  text-center p-3 m-3">
+  {{$eventos->links()}}
+</div>
 
 
-<div class="row bg-dark text-white mb-3   rounded mx-3">
+@if(auth()->user())
+@if (session('success'))
+<div class="alert alert-success alert-dismissible fade show "  role="alert">
+  <h3 class="text-center">Comentario creado con exito</h2>
+  <button type="button" class="btn-close btn btn-danger" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
+
+<div id="opiniones" class="row bg-dark text-white mb-3   rounded mx-3">
     <h3 class="text-center mt-5  ">Opiniones</h3>
-    <hr>
-    <div class="row mx-auto pb-5 ">
-        <div class="col-2 border text-center">
-            <p>nombrelargouwu</p>
+<hr>
+    <form class="form" action="{{route('crearcomentario')}}" method="post">
+      @csrf
+      <div class="row">
+        <div class="col-6" >
+
+
+        <textarea name="comentario" placeholder="Comenta aqui limite 420 caracteres" minlength="10" maxlength="420" class="form-control  mx-auto  " > </textarea>
+        
+      </div>
+        <input value="{{auth()->user()->id}}" type="hidden" name="idUser">
+        <input type="hidden" value="{{$evento->id}}" name="idEvento">
+        <div class="col-6">
+
+          <select class="form-select my-2  mx-auto text-center col-6" name="puntuacion" id="">
+            <option value="1">Malo</option>
+            <option value="2">Moderado</option>
+            <option value="3">Bueno</option>
+            <option value="4">Excelente</option>
+            <option value="5">Glorioso</option>
+          </select>
         </div>
-        <div class="col-8 border text-center">
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nihil unde quas ipsum commodi omnis et nesciunt, similique mollitia nam incidunt! Aspernatur itaque reprehenderit odit velit harum officiis reiciendis pariatur ducimus.</p>
-        </div>
-        <div class="col-2 border text-center">
-            <p class="text-center"> 5 <i class="bi bi-star-fill text-warning" ></i> </p>
-        </div>
+      </div>
+      <button  type="submit" class="btn btn-primary text-center d-block my-5 mx-auto ">Comentar</button>
+    </form>
+
+    <div style="height: 150px" class="overflow overflow-scroll">
+
+      @endif
+    @foreach ($opiniones as $opinion )
+    @if ($opinion->idEventoComentario == $evento->id)
+      
+    
+    <div style="height: 60px" class="row mx-auto pb-5  ">
+      <div class="col-2 border text-center">
+        <p>{{$opinion->name}}</p>
+      </div>
+      <div class="col-8 border text-center">
+        <p> {{$opinion->comentario}} </p>
+      </div>
+      <div class="col-2 border text-center">
+        <p class="text-center"> {{$opinion->puntuacion}} <i class="bi bi-star-fill text-warning" ></i> </p>
+      </div>
     </div>
+    
+    @endif
+   
+    @endforeach
 
 </div>
+</div>
+
+
 <div class="mx-auto d-block text-center">
     {{-- <button class="btn">
 
@@ -127,7 +178,7 @@
 
         <i class="bi bi-caret-right-fill fs-1"></i>
     </button> --}}
-    {{$eventos->links()}}
+  
 
 </div>
 </div>
@@ -200,7 +251,7 @@
 
 
 </div>
-<div  class="container-fluid bottom-0 color9 text-white mt-3 text-center">
+<div style="margin-top: 20rem;" class="container-fluid mt-auto   color9 text-white mt-3 text-center">
   <p>TravelTime todos los derechos reservados</p>
   <i class="bi bi-facebook fs-1"> </i>
   <i class="bi bi-instagram fs-1"> </i>
@@ -215,8 +266,8 @@
 </div>
 
     <!--- Javascript  !--->
-    <script  src="/bootstrap.bundle.min.js" ></script>
-    <script src="/index.js"></script>
+    <script  src="bootstrap.bundle.min.js" ></script>
+    <script src="index.js"></script>
 
 
 @endsection

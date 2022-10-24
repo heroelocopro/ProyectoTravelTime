@@ -18,8 +18,10 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('descripcion');
             $table->string('imagen');
-            $table->date('fecha');
-            $table->string('mapa');
+            $table->date('fechaInicio');
+            $table->date('fechaFin');
+            $table->unsignedBigInteger('ciudades');
+            $table->foreign('ciudades')->references('id')->on('ciudades');
             $table->timestamps();
         });
     }

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('idLugarComentario');
             $table->foreign('idLugarComentario')->references('id')->on('lugarturisticos');
+            $table->unsignedBigInteger('idUsuarioLugar');
+            $table->foreign('idUsuarioLugar')->references('id')->on('users')->onDelete('cascade');
             $table->string('comentario');
             $table->integer('puntuacion');
             $table->timestamps();

@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ciudades;
 use App\Models\evento;
+use App\Models\comentarioevento;
+use App\Models\lugaresturisticos_eventos;
+use App\Models\lugarturistico;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -10,8 +14,41 @@ use Illuminate\Support\Facades\DB;
 class EventoController extends Controller
 {
 
+    public function actualizarEvento(Request $request){
+        $request->validate([
+            'nombre' => 'required',
+            'fechaInicio' => 'required|date',
+            'fechaFin' => 'required|date',
+            'descripcion' => 'required',
+            'ciudades' => 'required'
+        ]);
+        $evento = evento::find($request->idEvento);
+        if($request->hasFile("imagen")){
+
+            $imagen = $request->file("imagen");
+            $nombreimagen = Str::slug($request->nombre).".".$imagen->guessExtension();
+            $ruta = public_path("img/");
+
+            //$imagen->move($ruta,$nombreimagen);
+            copy($imagen->getRealPath(),$ruta.$nombreimagen);
+            $evento->imagen = $nombreimagen;
+        }
+        $evento->nombre = $request->nombre;
+        $evento->fecha = $request->fecha;
+        $evento->descripcion = $request->descripcion;
+        $evento->mapa = $request->mapa;
+
+        $evento->save();
+
+        
+        return redirect()->route('gestionarEventos')->with('success','Evento Actualizado');
+
+        
+    }
+
     public function obtener($id){
         $evento = evento::find($id);
+        
         return $evento;
     }
     /**
@@ -22,7 +59,17 @@ class EventoController extends Controller
     public function index()
     {
         $eventos = DB::table('eventos')->simplePaginate(1);
-            return view('eventos.eventos',  ['eventos' => $eventos]);
+        $opiniones = DB::select("select comentarioeventos.* ,users.name , users.rol  from comentarioeventos inner JOIN
+        users on comentarioeventos.idUsuarioComentario = users.id order by comentarioeventos.created_at desc");
+        $puntuacion  = DB::select('select * from comentarioeventos ');
+        $eventos2 = evento::all();
+        $lugares2 = lugarturistico::all();
+        $ciudades = ciudades::all();
+        $lugarEvento = lugaresturisticos_eventos::all();
+        $ubicacion = DB::select('SELECT lugarturisticos.*, asText(ubicacion) as geo FROM `lugarturisticos`;');
+
+            return view('eventos.muchos',['eventos2' => $eventos2 , 'lugares2' => $lugares2,'ciudades2' => $ciudades,'ubicacion2' => $ubicacion,'lugarEvento' => $lugarEvento ]);
+            return view('eventos.plantilla',  ['eventos' => $eventos, 'opiniones' => $opiniones, 'puntuacion' => $puntuacion]);
 
     }
 
@@ -46,10 +93,11 @@ class EventoController extends Controller
     {
         $request->validate([
             'nombre' => 'required',
-            'fecha' => 'required|date',
+            'fechaInicio' => 'required|date',
+            'fechaFin' => 'required|date',
             'imagen' => 'required',
             'descripcion' => 'required',
-            'mapa' => 'required'
+            'ciudades' => 'required'
         ]);
 
         if($request->hasFile("imagen")){
@@ -63,20 +111,20 @@ class EventoController extends Controller
 
         }
 
-        $rutanormal = '<iframe src="https://www.google.com/maps/embed?pb=!4v1663599736207!6m8!1m7!1saCokeKEzdg-HEa3nwE6nqQ!2m2!1d4.305038921804285!2d-74.8028797108409!3f37.56!4f-4.560000000000002!5f0.7820865974627469" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>';
 
 
-            $cadena_de_texto = $request->mapa;
-            $cadena_buscada   = 'src" ';
-            $posicion_coincidencia = strrpos($cadena_de_texto, $cadena_buscada);
-
-
-        evento::create([
+       $evento = evento::create([
             'nombre' => $request->nombre,
-            'fecha' => $request->fecha,
+            'fechaInicio' => $request->fechaInicio,
+            'fechaFin' => $request->fechaFin,
             'imagen' => $nombreimagen,
             'descripcion' => $request->descripcion,
-            'mapa' => $request->mapa
+            'ciudades' => $request->ciudades
+        ]);
+
+        lugaresturisticos_eventos::create([
+            'idEvento' => $evento->id,
+            'idLugarTuristico' => $request->idLugarTuristico
         ]);
 
         return redirect()->route('gestionarEventos')->with('success','Evento creado');
@@ -136,7 +184,9 @@ class EventoController extends Controller
     }
 
     public function gestionar() {
+        $lugares = lugarturistico::all();
         $eventos = evento::all();
-        return view('eventos.index', ['eventos' => $eventos]);
+        $ciudades = ciudades::all();
+        return view('eventos.index', ['eventos' => $eventos, 'ciudades' => $ciudades, 'lugares' => $lugares]);
     }
 }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('descripcion');
             $table->string('imagen');
+            $table->point('ubicacion');
             $table->timestamps();
         });
     }
