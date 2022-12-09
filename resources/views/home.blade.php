@@ -11,6 +11,7 @@ body{
     background-size: cover;
 }
 </style>
+<link rel="stylesheet" href="css/welcome.css">
 <body >
 
 
@@ -19,42 +20,13 @@ body{
 
 
 
-        <div id="contenedor" class="escondido animate__animated animate__backInDown  ">
-            <div   class=" collapse  color7 animate__animated w-100 navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 ms-1 mb-lg-0">
-                  <li class="nav-item">
-                    <a class="nav-link active text-dark " aria-current="page" href="{{ route('verEventos') }} ">Eventos <i class="bi bi-house"></i>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link text-dark" href="#">Lugares Turisticos</a>
-                  </li>
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Girardot
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item text-dark" href="#">Historia</a></li>
-                      <li><a class="dropdown-item text-dark" href="#">platos tipicos </a></li>
-                      <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item text-dark" href="#">Something else here</a></li>
-                    </ul>
-                  </li>
-                  <li>
-                  </li>
-
-
-
-                </ul>
-
-            </div>
-
-        </div>
+        
+      
 
         <div id="Introduccion" class="container mt-5">
         <div class="row ">
-        <div class="col-12 col-lg-6">
-            <span class="container-fluid fs-5  ">
+        <div class="col-12 col-lg-6 ">
+            <span class=" fs-5 d-flex ">
                 Girardot es un municipio colombiano del departamento de Cundinamarca ubicado en la Provincia del Alto Magdalena, de la cual es capital. Limita al norte con los municipios de Nariño y Tocaima, al sur con el municipio de Flandes y el río Magdalena, al oeste con el municipio de Nariño, el río Magdalena y el municipio de Coello y al este con el municipio de Ricaurte y el río Bogotá.
                 <br>
                 <br>
@@ -65,71 +37,71 @@ body{
             </span>
         </div>
         <div class="col-12 col-lg-6 ">
-            <img class="img-fluid w-100 mt-auto" id="imgIntro" src="img2\girardot girardot.png" alt="">
+            <img class="img-fluid w-100 mt-auto mx-auto" id="imgIntro" src="img2\girardot girardot.png" alt="">
         </div>
         </div>
         </div>
 
-        <main>
+        <div class="container__card mt-4 mb-4">
 
-            <div class="container__card">
-
-                <div class="card__father">
-                    <div class="card">
-                        <div class="card__front" style="background-image: url(img2/img4.png);">
-                            <div class="bg"></div>
-                            <div class="body__card_front">
-                                <h1>Aqui va eventos</h1>
-                            </div>
+            <div class="card__father">
+                <div class="card">
+                    <div class="card__front" style="background-image: url(img2/img4.png);">
+                        <div class="bg"></div>
+                        <div class="body__card_front">
+                            <h1>Eventos</h1>
                         </div>
-                        <div class="card__back">
-                            <div class="body__card_back">
-                                <h1>Eventos</h1>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur ab quas recusandae voluptatum aliquid tempore animi corporis voluptas. Tempore neque iure necessitatibus voluptas nesciunt animi dolores incidunt delectus sapiente illum.</p>
-                                <input type="button" value="Leer Más">
-                            </div>
+                    </div>
+                    <div class="card__back">
+                        <div class="body__card_back">
+                            <h1>Eventos</h1>
+                            <p>Aqui puedes ir a ver los Eventos que se realizan en el municipio de Girardot.</p>
+                            <a href="{{ route('verEventos') }}"><input type="button" value="Ir a Eventos"></a>
                         </div>
                     </div>
                 </div>
-
-                <div class="card__father">
-                    <div class="card">
-                        <div class="card__front" style="background-image: url(img2/img2.jpg);">
-                            <div class="bg"></div>
-                            <div class="body__card_front">
-                                <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic, omnis.</h1>
-                            </div>
-                        </div>
-                        <div class="card__back">
-                            <div class="body__card_back">
-                                <h1>Login o Register</h1>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur ab quas recusandae voluptatum aliquid tempore animi corporis voluptas. Tempore neque iure necessitatibus voluptas nesciunt animi dolores incidunt delectus sapiente illum.</p>
-                                <input type="button" value="Leer Más">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card__father">
-                    <div class="card">
-                        <div class="card__front" style="background-image: url(img2/img3.jpg);">
-                            <div class="bg"></div>
-                            <div class="body__card_front">
-                                <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic, omnis.</h1>
-                            </div>
-                        </div>
-                        <div class="card__back">
-                            <div class="body__card_back">
-                                <h1>Lugares</h1>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur ab quas recusandae voluptatum aliquid tempore animi corporis voluptas. Tempore neque iure necessitatibus voluptas nesciunt animi dolores incidunt delectus sapiente illum.</p>
-                                <input type="button" value="Leer Más">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
 
-        </main>
+            <div class="card__father">
+                <div class="card">
+                    <div class="card__front" style="background-image: url(img2/img2.jpg);">
+                        <div class="bg"></div>
+                        <div class="body__card_front">
+                            <h1>Login o Register</h1>
+                        </div>
+                    </div>
+                    <div class="card__back">
+                        <div class="body__card_back">
+                            <h1>Login o Register</h1>
+                            <p>Aqui puede Iniciar Sesion o Registrarse</p>
+                            <a href="login"><input type="button" value="Iniciar Sesion"></a>
+                            <h4>o</h4>
+                            <a href="register"><input class="mt-1" type="button" value="Registrarse"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card__father">
+                <div class="card">
+                    <div class="card__front" style="background-image: url(img2/img3.jpg);">
+                        <div class="bg"></div>
+                        <div class="body__card_front">
+                            <h1>Lugares Turisticos</h1>
+                        </div>
+                    </div>
+                    <div class="card__back">
+                        <div class="body__card_back">
+                            <h1>Lugares</h1>
+                            <p>Aqui puedes ir a ver los Lugares Turisticos de el municipio de Girardot.</p>
+                        <form action="">
+                            <a href="{{ route('lugares') }}"><input type="button" value="Ir a Lugares"></a>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
 
 @endsection

@@ -2,15 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\comentariolugar;
+use App\Models\ciudades;
+use App\Models\departamento;
 use App\Models\lugarturistico;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Symfony\Component\String\CodePointString;
+use RealRashid\SweetAlert\Facades\Alert;
+
+
 
 class LugarturisticoController extends Controller
 {
+    public function buscar(Request $request)
+    {
+
+        $name = $request->get('nombre');
+        $lugares = lugarturistico::where('nombre','like',"%".$name."%")->paginate(1);
+        $departamentos = departamento::all();
+        $ciudades = ciudades::all();
+        return view('lugares.buscar',compact(['lugares','departamentos','ciudades']));
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,11 +33,15 @@ class LugarturisticoController extends Controller
      */
     public function index()
     {
-        $lugares = DB::table('lugarturisticos')->simplePaginate(1);
-        $opiniones = DB::select("select comentariolugars.* ,users.name , users.rol  from comentariolugars inner JOIN
-        users on comentariolugars.idUsuarioLugar = users.id order by comentariolugars.created_at desc");
-        $puntuacion  = DB::select('select * from comentariolugars ');
-        return view('lugares.index', ['lugares' => $lugares, 'opiniones' => $opiniones, 'puntuacion' => $puntuacion]);
+        // $lugares = DB::table('lugarturisticos')->simplePaginate(1);
+        // $opiniones = DB::select("select comentariolugars.* ,users.name , users.rol  from comentariolugars inner JOIN
+        // users on comentariolugars.idUsuarioLugar = users.id order by comentariolugars.created_at desc");
+        // $puntuacion  = DB::select('select * from comentariolugars ');
+        // return view('lugares.index', ['lugares' => $lugares, 'opiniones' => $opiniones, 'puntuacion' => $puntuacion]);
+        $lugares = lugarturistico::where('id','>','0')->paginate(1);
+        $departamentos = departamento::all();
+        $ciudades = ciudades::all();
+        return view('lugares.lugares', compact(['lugares','departamentos','ciudades']));
     }
 
     /**
@@ -76,19 +95,12 @@ class LugarturisticoController extends Controller
         `created_at`,
         `updated_at`)
         VALUES(
-        0,'$request->nombre','$request->descripcion','$nombreimagen',point( $x[1] , $x[0]  ),now(),now());
+        0,'$request->nombre','$request->descripcion','$nombreimagen','$request->ubicacion',now(),now());
         ";
 
         DB::insert($consulta);
-
-        // lugarturistico::create([
-        //     'nombre' => $request->nombre,
-        //     'descripcion' => $request->descripcion,
-        //     'imagen' => $nombreimagen,
-        //     'ubicacion' =>  $request->ubicacion 
-        // ]);
-
-        return redirect()->route('gestionarLugares')->with('success' ,'Lugar Creado');
+        Alert::success('Lugar Creado','El lugar | '. $request->nombre .' | fue creado con exito');
+        return Redirect::to(URL::previous() . "#formCreado")->with('creado' ,'Lugar creado');
     }
 
     /**
@@ -99,9 +111,13 @@ class LugarturisticoController extends Controller
      */
     public function show($id)
     {
-        //
         $lugar = lugarturistico::find($id);
         return $lugar;
+    }
+
+    public function mostrar($id)
+    {        
+        return lugarturistico::find($id);
     }
 
     /**
@@ -142,14 +158,20 @@ class LugarturisticoController extends Controller
             copy($imagen->getRealPath(),$ruta.$nombreimagen);
             $lugar->imagen = $nombreimagen;
         }
+
+        if($request->ubicacionUpdate != ""){
+
+
+            $lugar->ubicacion = $request->ubicacionUpdate;
+        }
        
 
         
         $lugar->nombre = $request->nombre;
         $lugar->descripcion = $request->descripcion;
         $lugar->save();
-
-        return redirect()->route('gestionarLugares')->with('success' ,'Lugar Actualizado');
+        Alert::info('Lugar Actualizado','El lugar | '. $lugar->nombre .' | fue Actualizado con exito');
+        return Redirect::to(URL::previous() . "#formActualizado")->with('actualizado' ,'Lugar Actualizado');
 
     }
     public function eliminar(Request $request){
@@ -157,8 +179,9 @@ class LugarturisticoController extends Controller
             'idLugar' => 'required'
         ]);
         $lugar = lugarturistico::find($request->idLugar);
+        Alert::warning('Lugar Eliminado','El lugar | '. $lugar->nombre .' | fue eliminado');
         $lugar->delete();
-        return redirect()->back()->with('success','evento eliminado');
+        return Redirect::to(URL::previous() . "#formEliminado")->with('eliminado' ,'Lugar eliminado');
     }
 
     /**

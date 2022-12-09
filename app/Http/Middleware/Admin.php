@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 use Closure;
 use App\Http\Middleware\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class Admin
 {
@@ -17,7 +18,9 @@ class Admin
     
     public function handle($request, Closure $next)
 {
-     if (auth()->user() &&  auth()->user()->rol == 2) {
+    $peticion = "SELECT id FROM `roles` where nombre = 'admin'";
+        $resultado =  DB::select($peticion);
+     if (auth()->user() &&  auth()->user()->rol == $resultado[0]->id) {
             return $next($request);
      }
 

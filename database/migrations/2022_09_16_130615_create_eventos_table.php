@@ -20,8 +20,10 @@ return new class extends Migration
             $table->string('imagen');
             $table->date('fechaInicio');
             $table->date('fechaFin');
-            $table->unsignedBigInteger('ciudades');
-            $table->foreign('ciudades')->references('id')->on('ciudades');
+            $table->unsignedBigInteger('ciudad_id');
+            $table->foreign('ciudad_id')->references('id')->on('ciudades');
+            $table->unsignedBigInteger('departamento_id');
+            $table->foreign('departamento_id')->references('id')->on('departamentos');
             $table->timestamps();
         });
     }

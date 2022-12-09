@@ -35,7 +35,7 @@
 <body class="overflow-hidden">
     
 </body>
-<button class="float-start btn btn-primary m-1 shadow"><a class="text-decoration-none text-white" href="{{route('verEventos')}}">Volver</a></button>
+<button class="float-start btn btn-primary m-1 shadow"><a class="text-decoration-none text-white" href="{{route('home')}}">Volver</a></button>
 <div style="min-height: 50.5rem;" class="d-flex flex-row justify-content-center align-items-center container-fluid"  >
     <form method="POST" style="width: 30rem" class="shadow rounded-3 border p-5" action="{{route('register')}}">
         @csrf
@@ -72,61 +72,4 @@
 </div>
 
 <script  src="js/bootstrap.bundle.min.js" ></script>
-{{-- <x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-            </a>
-        </x-slot>
-
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
-
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
-
-            <!-- Name -->
-            <div>
-                <x-input-label for="name" :value="__('Name')" />
-
-                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
-            </div>
-
-            <!-- Email Address -->
-            <div class="mt-4">
-                <x-input-label for="email" :value="__('Email')" />
-
-                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
-            </div>
-
-            <!-- Password -->
-            <div class="mt-4">
-                <x-input-label for="password" :value="__('Password')" />
-
-                <x-text-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="new-password" />
-            </div>
-
-            <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-                <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
-
-                <x-primary-button class="ml-4">
-                    {{ __('Register') }}
-                </x-primary-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout> --}}
+@include('sweetalert::alert')

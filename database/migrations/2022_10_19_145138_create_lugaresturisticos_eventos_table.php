@@ -15,10 +15,8 @@ return new class extends Migration
     {
         Schema::create('lugaresturisticos_eventos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('idEvento');
-            $table->unsignedBigInteger('idLugarTuristico');
-            $table->foreign('idEvento')->references('id')->on('eventos')->onDelete('cascade');
-            $table->foreign('idLugarTuristico')->references('id')->on('lugarTuristicos')->onDelete('cascade');
+            $table->foreignId('evento_id')->nullable()->constrained('eventos')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('lugarturistico_id')->nullable()->constrained('lugarturisticos')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }

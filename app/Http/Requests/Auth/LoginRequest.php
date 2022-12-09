@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use RealRashid\SweetAlert\Facades\Alert;
+
 
 class LoginRequest extends FormRequest
 {
@@ -44,10 +46,10 @@ class LoginRequest extends FormRequest
     public function authenticate()
     {
         $this->ensureIsNotRateLimited();
-
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
-
+            
+            Alert::error('Email o Contraseña Incorrecto','Verifica si los datos son correctos| intentos restantes '. (RateLimiter::retriesLeft($this->throttleKey(),2))+1);
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
             ]);
@@ -65,14 +67,15 @@ class LoginRequest extends FormRequest
      */
     public function ensureIsNotRateLimited()
     {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 2)) {
+            
             return;
         }
 
         event(new Lockout($this));
 
         $seconds = RateLimiter::availableIn($this->throttleKey());
-
+        Alert::warning('fuiste bloqueado por tantos intentos','reintentalo en '. $seconds. ' segundos' );
         throw ValidationException::withMessages([
             'email' => trans('auth.throttle', [
                 'seconds' => $seconds,

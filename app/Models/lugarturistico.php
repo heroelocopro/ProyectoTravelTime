@@ -16,6 +16,8 @@ class lugarturistico extends Model
     ];
 
     public function eventos(){
-        return $this->belongsToMany(evento::class,'lugaresturisticos_eventos','idLugarTuristico','id');
+        return $this->belongsToMany(evento::class,'lugaresturisticos_eventos');
     }
+
+
 }

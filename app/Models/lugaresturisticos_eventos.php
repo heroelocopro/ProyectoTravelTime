@@ -9,7 +9,7 @@ class lugaresturisticos_eventos extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'idEvento',
-        'idLugarTuristico'
+        'evento_id',
+        'lugarturistico_id'
     ];
 }

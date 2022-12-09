@@ -161,11 +161,7 @@ h1 {
                 </div>
                 <form method="POST" action="{{route('login')}}" class="p-3 mt-3">
                     @csrf
-                    @if($errors->any())
-                    <div class="alert alert-danger my-5">
-                        Correo o contraseña incorrecto
-                    </div>
-                    @endif
+                    
                     <div class="form-field d-flex align-items-center">
                         <span class="far fa-user"></span>
                         <input type="text" name="email" id="userName" placeholder="Correo">
@@ -183,3 +179,4 @@ h1 {
         </div>
     </div>
  </div>
+ @include('sweetalert::alert')

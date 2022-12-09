@@ -12,6 +12,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="css/welcome.css">
+        <link rel="stylesheet" href="css/Footer.css">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
         <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
@@ -25,63 +26,96 @@
 
 <body style="background-image: url(img2/img1.jpeg);
 background-size: cover; ">
-    {{-- @if(auth()->check())
+    <nav class="mb-5 pb-5">
+       
+        <div class="nav-fostrap">
+          <ul>
+            @if (auth()->check())
+            <li> <button class="btn border-0 text-dark w-100" disabled>{{ auth()->user()->name }}</button> </li>
+            @endif
+            <li><a href="{{ route('home') }}">Home</a></li>
+            @if (auth()->check() and auth()->user()->rol == 2)
+            <li> <a href="{{ route('gestionarEventos') }}">Gestionar Eventos</a> </li>
+            @endif
+            <li><a href="{{ route('verEventos') }} ">Eventos</a></li>
+            @if (auth()->check() and auth()->user()->rol == 2)
+            <li> <a href="{{ route('gestionarLugares') }}">Gestionar Lugares</a> </li>
+            @endif
+            <li><a href="{{ route('lugares') }}">Lugares Turisticos</a></li> 
+            @if (auth()->check())
+                <form action="{{route('logout')}}" method="post">
+                @csrf
+                <li><button class="btn w-100 text-start text-decoration-underline" type="submit" class="visually-hidden" type="submit">Cerrar sesion</button></li>
+                </form>
+             @endif
+          </ul>
+        </div>
+        <div class="nav-bg-fostrap">
+        <div class="navbar-fostrap"> <img id="boton" src="img2/qiqi.gif" class="rounded-5 " alt="">
+        </div>
+        <h1 id="Texto-lg" class="">TravelTime</h1>
 
-    @if (auth()->user()->rol == "usuario")
-<h1>USUARIO</h1>
-    @endif
-
-    @if(auth()->user()->rol == "admin")
-    <h1>ADMIN</h1>
-    @endif
-
-
-    @endif --}}
-    <div id="nav" class= "border-nav   ">
-
-
-        <a href="#" class="text-decoration-none">
-            <img id="boton" src="img2/qiqi.gif" class=" animate__animated  rounded" width="50rem" height="50rem" alt="" srcset="">
-        </a>
-        <span class="texto8 p-0 m-0 ms-2"> <a id="menu" class="text-decoration-none texto8" href="/">
-          TravelTime
-      </a> </span> <span>
-
-
-
-        @if (auth()->check())
-
-
-        <form class="float-end pt-2 px-2" action="{{route('logout')}}" method="post">
-            @csrf
-            <button class="rounded" type="submit"> cerrar sesion </button>
-        </form>
-        @endif
+   
 <span class="text-white">
 
-    <a class="btn border border-white text-white text-decoration-none texto8 mx-2" href="{{route('verEventos')}} ">Ver eventos</a>
-    @if(auth()->check())
-    @if (auth()->user()->rol == 2)
-            <a class="btn border text-white border-white text-decoration-none texto8 mx-2" href="{{route('gestionarEventos')}} ">Gestionar eventos</a>
-            <a class="btn border text-white border-white text-decoration-none texto8 mx-2" href="{{route('gestionarLugares')}} ">Gestionar Lugares</a>
-            @endif
-            <span class="float-end pt-2 px-2">
-                {{ auth()->user()->name }}
-            </span>
-            @else
-            <a class="float-end mt-2 text-decoration-underline mx-3 texto8    " href=" {{route('login')}} ">Log In</a>
-            @endif
-            <a class="btn border border-white text-white text-decoration-none texto8 mx-2" href="{{route('verLugares')}} ">Ver Lugares</a>
 
-              </span>
 
+          </span>
         </div>
+      </nav>
 
 
 
         @yield('contenido')
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+        <footer class="footer-section">
+            <div class="container">
+                <div class="footer-cta pt-5 pb-5">
+                    <div class="row">
+                        <div class="col-xl-4 col-md-4 mb-30">
+                            <div class="single-cta">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div class="cta-text">
+                                    <h4>Find us</h4>
+                                    <span>1010 Avenue, sw 54321, chandigarh</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-4 mb-30">
+                            <div class="single-cta">
+                                <i class="fas fa-phone"></i>
+                                <div class="cta-text">
+                                    <h4>Call us</h4>
+                                    <span>9876543210 0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-4 mb-30">
+                            <div class="single-cta">
+                                <i class="far fa-envelope-open"></i>
+                                <div class="cta-text">
+                                    <h4>Mail us</h4>
+                                    <span>mail@info.com</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+        </footer>
 
         <script  src="js/bootstrap.bundle.min.js" ></script>
         <script src="js/index.js"></script>
+        <script>
+            $(document).ready(function(){
+    $('.navbar-fostrap').click(function(){
+      $('.nav-fostrap').toggleClass('visible');
+      $('body').toggleClass('cover-bg');
+    });
+  });
+
+        </script>
 </body>
 </html>
+@include('sweetalert::alert')
