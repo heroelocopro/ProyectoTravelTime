@@ -83,22 +83,11 @@ class LugarturisticoController extends Controller
         }
 
         $request->imagen = $nombreimagen;
-
-        $point = $request->ubicacion;
-        $x = explode(',',$point);
-        $consulta = "INSERT INTO `traveltime2`.`lugarturisticos`
-        (`id`,
-        `nombre`,
-        `descripcion`,
-        `imagen`,
-        `ubicacion`,
-        `created_at`,
-        `updated_at`)
-        VALUES(
-        0,'$request->nombre','$request->descripcion','$nombreimagen','$request->ubicacion',now(),now());
-        ";
-
-        DB::insert($consulta);
+        $lugarturistico = lugarturistico::create([
+            'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
+            'imagen' => $nombreimagen,
+            'ubicacion' => $request->ubicacion]);
         Alert::success('Lugar Creado','El lugar | '. $request->nombre .' | fue creado con exito');
         return Redirect::to(URL::previous() . "#formCreado")->with('creado' ,'Lugar creado');
     }
